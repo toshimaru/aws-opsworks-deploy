@@ -16,6 +16,8 @@ workflows:
     jobs:
       - validate
       - orb-tools/test-in-builds:
+          requires:
+            - validate
           orb-location: src/orb.yml
           orb-name: aws-opsworks-deploy
           test-steps:
