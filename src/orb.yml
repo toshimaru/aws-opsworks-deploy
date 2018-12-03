@@ -44,15 +44,20 @@ commands:
         description: "Deploymnet comment"
         type: string
         default: "${CIRCLE_BRANCH}: ${CIRCLE_SHA1}"
+      generate-cli-skeleton:
+        description: "Output JSON skeleton(mainly used for test)"
+        type: boolean
+        default: false
     steps:
       - run:
           name: "OpsWorks Deployment"
           command: |
-            aws --region $AWS_REGION opsworks create-deployment \
-                --stack-id $STACK_ID \
-                --app-id $APP_ID \
-                --command << parameters.command >> \
-                --comment << parameters.comment >>
+            aws --region << parameters.aws-region >> opsworks create-deployment \
+                --stack-id << parameters.stack-id >> \
+                --app-id << parameters.app-id >> \
+                --command '<< parameters.command >>' \
+                --comment "<< parameters.comment >>" \
+                <<# parameters.generate-cli-skeleton >> --generate-cli-skeleton <</ parameters.generate-cli-skeleton >>
 
 jobs:
   deploy:
