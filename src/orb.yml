@@ -29,6 +29,7 @@ commands:
       aws-region:
         description: "OpsWorks Region"
         type: string
+        default: "${AWS_REGION}"
       stack-id:
         description: "OpsWorks Stack ID"
         type: string
@@ -63,7 +64,8 @@ jobs:
     steps:
       - checkout
       - aws-cli/install
-      - aws-cli/configure
+      - aws-cli/configure:
+          aws-region: << parameters.aws-region >>
       - deploy:
           aws-region: << parameters.aws-region >>
           stack-id: << parameters.stack-id >>
