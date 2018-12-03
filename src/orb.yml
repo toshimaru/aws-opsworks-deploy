@@ -65,8 +65,8 @@ jobs:
       - aws-cli/install
       - aws-cli/configure
       - deploy:
-          aws-region: << parameters.application-name >>
-          stack-id: << parameters.deployment-group >>
-          app-id: << parameters.deployment-config >>
-          command: << parameters.bundle-bucket >>
-          comment: << parameters.bundle-key >>
+          aws-region: << parameters.aws-region >>
+          stack-id: << parameters.stack-id >>
+          app-id: << parameters.app-id >>
+          command: << parameters.command >>
+          comment: << parameters.comment >>
