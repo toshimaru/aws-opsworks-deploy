@@ -1,0 +1,72 @@
+version: 2.1
+
+description: |
+  Deploy applications to AWS OpsWorks.
+
+examples:
+  deploy_application:
+    description: Deploy an application to AWS OpsWorks
+    usage:
+      version: 2.1
+      orbs:
+        aws-opsworks-deploy: circleci/aws-opsworks-deploy@0.0.1
+      workflows:
+        deploy_application:
+          jobs:
+            - aws-opsworks-deploy/deploy:
+                aws-region: region
+                stack-id: stack_id
+                app-id: app_id
+                command: '{"Name": "deploy", "Args":{"migrate":["true"]}}'
+                comment: comment
+
+orbs:
+  aws-cli: circleci/aws-cli@0.0.1
+
+commands:
+  deploy:
+    parameters: &parameters
+      aws-region:
+        description: "OpsWorks Region"
+        type: string
+      stack-id:
+        description: "OpsWorks Stack ID"
+        type: string
+      app-id:
+        description: "OpsWorks App ID"
+        type: string
+      command:
+        description: "OpsWorks Deployment command"
+        type: string
+        default: '{"Name": "deploy"}'
+      comment:
+        description: "Deploymnet comment"
+        type: string
+        default: "${CIRCLE_BRANCH}: ${CIRCLE_SHA1}"
+    steps:
+      - run:
+          name: "OpsWorks Deployment"
+          command: |
+            aws --region $AWS_REGION opsworks create-deployment \
+                --stack-id $STACK_ID \
+                --app-id $APP_ID \
+                --command << parameters.command >> \
+                --comment << parameters.comment >>
+
+jobs:
+  deploy:
+    description:
+      "OpsWorks Deployment"
+    parameters:
+      <<: *parameters
+    executor: aws-cli/default
+    steps:
+      - checkout
+      - aws-cli/install
+      - aws-cli/configure
+      - deploy:
+          aws-region: << parameters.application-name >>
+          stack-id: << parameters.deployment-group >>
+          app-id: << parameters.deployment-config >>
+          command: << parameters.bundle-bucket >>
+          comment: << parameters.bundle-key >>
