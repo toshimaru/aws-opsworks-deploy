@@ -8,6 +8,7 @@ jobs:
   validate:
     executor: cli/default
     steps:
+      - checkout
       - run: circleci orb validate src/orb.yml
 
 workflows:
