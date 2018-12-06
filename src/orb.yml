@@ -1,7 +1,8 @@
 version: 2.1
 
 description: |
-  Deploy applications to AWS OpsWorks.
+  Deploy applications to AWS OpsWorks. 
+  https://github.com/toshimaru/aws-opsworks-deploy
 
 examples:
   deploy_application:
@@ -19,6 +20,9 @@ examples:
                 app-id: app_id
                 command: '{"Name": "deploy", "Args":{"migrate":["true"]}}'
                 comment: comment
+                filters:
+                  branches:
+                    only: master
 
 orbs:
   aws-cli: circleci/aws-cli@0.1.4
