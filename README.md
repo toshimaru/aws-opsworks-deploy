@@ -6,6 +6,6 @@ CircleCI Orb for AWS OpsWorks deployment.
 
 ## Documentation
 
-For more usage, please visit offial CircleCI Orb Registry:
+For more usage, please visit the offial CircleCI Orb Registry:
 
 [CircleCI Orb Registry - toshimaru/aws-opsworks-deploy](https://circleci.com/orbs/registry/orb/toshimaru/aws-opsworks-deploy)
