@@ -1,8 +1,8 @@
 version: "2.1"
 
 orbs:
-  orb-tools: circleci/orb-tools@2.0.2
-  cli: circleci/circleci-cli@0.1.2
+  orb-tools: circleci/orb-tools@8.27.1
+  cli: circleci/circleci-cli@0.1.4
 
 jobs:
   validate:
@@ -15,6 +15,7 @@ workflows:
   test_orb:
     jobs:
       - validate
+      - orb-tools/lint
       - orb-tools/test-in-builds:
           requires:
             - validate

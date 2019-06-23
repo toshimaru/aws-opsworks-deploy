@@ -10,7 +10,7 @@ jobs:
       # These environment variables are required for aws-cli
       AWS_ACCESS_KEY_ID: test_key
       AWS_SECRET_ACCESS_KEY: test_secret
-      AWS_REGION: ap-northeast-1
+      AWS_DEFAULT_REGION: ap-northeast-1
       STACK_ID: STACK_ID_BY_ENV
       APP_ID: APP_ID_BY_ENV
     steps:

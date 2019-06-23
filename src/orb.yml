@@ -1,7 +1,7 @@
 version: 2.1
 
 description: |
-  Deploy applications to AWS OpsWorks. 
+  Deploy applications to AWS OpsWorks.
   https://github.com/toshimaru/aws-opsworks-deploy
 
 examples:
@@ -25,7 +25,7 @@ examples:
                     only: master
 
 orbs:
-  aws-cli: circleci/aws-cli@0.1.6
+  aws-cli: circleci/aws-cli@0.1.13
 
 commands:
   deploy:
@@ -33,7 +33,7 @@ commands:
       aws-region:
         description: "OpsWorks Region"
         type: string
-        default: ${AWS_REGION}
+        default: ${AWS_DEFAULT_REGION}
       stack-id:
         description: "OpsWorks Stack ID"
         type: string
@@ -74,7 +74,9 @@ jobs:
       - checkout
       - aws-cli/install
       - aws-cli/configure:
-          aws-region: << parameters.aws-region >>
+          # Note: circleci/aws-cli type for aws-region is env_var_name
+          # ref. https://circleci.com/orbs/registry/orb/circleci/aws-cli
+          aws-region: AWS_DEFAULT_REGION
       - deploy:
           aws-region: << parameters.aws-region >>
           stack-id: << parameters.stack-id >>
